@@ -23,7 +23,7 @@ dag = DAG(
     'kafka_log_producer',
     default_args=default_args,
     description='A DAG to produce logs and send them to Kafka',
-    schedule_interval=timedelta(minutes=10),
+    schedule=timedelta(minutes=10),
 )
 
 # Function to generate and send a log message to Kafka
@@ -58,7 +58,6 @@ def generate_and_send_log(**context):
 send_log_to_kafka = PythonOperator(
     task_id='send_log_to_kafka',
     python_callable=generate_and_send_log,
-    provide_context=True,
     dag=dag,
 )
 
